@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Farm Contract Ledger",
+      "hasCanvas": false,
+      "bodyTextLen": 1252,
+      "bodyTextHash": "30562f6c39f011181c956c0e12ae5f9bd97e97ef097f1349b47317e68ec73d7d",
+      "bodyTextPrefix": "Light Dark Discreet Font Ledger Literata Source Sans Georgia Cou",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Farm Contract Ledger",
+      "hasCanvas": false,
+      "bodyTextLen": 1252,
+      "bodyTextHash": "30562f6c39f011181c956c0e12ae5f9bd97e97ef097f1349b47317e68ec73d7d",
+      "bodyTextPrefix": "Light Dark Discreet Font Ledger Literata Source Sans Georgia Cou",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [
+    "BRAND NOTE: no custom public/og.jpg — the platform will serve the og.grok.me placeholder. Custom cards are the default for games of every kind (DOM board/word games included), whimsical apps, creative tools, and brand-forward pages — only plain utilities (converters, CRUD trackers, admin dashboards) keep the placeholder. If this app is not a plain utility, finish the brand-asset pass per /workspace/.grok/skills/og/SKILL.md."
+  ],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

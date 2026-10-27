@@ -1,0 +1,90 @@
+@import "@fontsource/literata/latin-400.css";
+@import "@fontsource/literata/latin-600.css";
+@import "@fontsource/literata/latin-700.css";
+@import "@fontsource/source-sans-3/latin-400.css";
+@import "@fontsource/source-sans-3/latin-600.css";
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Source Sans 3", "Segoe UI", sans-serif;
+  --font-serif: "Literata", Georgia, serif;
+
+  --color-bg: #f3efe6;
+  --color-card: #fffcf7;
+  --color-ink: #1c2419;
+  --color-muted: #5c6558;
+  --color-line: #d8d0c2;
+  --color-field: #245c3a;
+  --color-field-deep: #1a442b;
+  --color-field-soft: #e5f0e8;
+  --color-on-field: #f4faf6;
+  --color-danger: #9c3b2e;
+  --color-danger-soft: #f8ece8;
+}
+
+[data-theme="dark"] {
+  --color-bg: #101510;
+  --color-card: #1a211b;
+  --color-ink: #e7eee6;
+  --color-muted: #a3aea0;
+  --color-line: #313a32;
+  --color-field: #8fcea3;
+  --color-field-deep: #b7e0c4;
+  --color-field-soft: #1e3326;
+  --color-on-field: #102116;
+  --color-danger: #ffb4a8;
+  --color-danger-soft: #3a2420;
+  color-scheme: dark;
+}
+
+:root {
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-bg);
+    color: var(--color-ink);
+    line-height: 1.5;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+details.season > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.season[open] .chev {
+  transform: rotate(180deg);
+}
+
+.discreet .private {
+  display: none !important;
+}
+
+.discreet-note {
+  display: none;
+}
+
+.discreet .discreet-note {
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
