@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reverse Farm Income Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c7a4d, #4a9d6a);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .form-container {
+            padding: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #2c7a4d;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2c7a4d;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2c7a4d;
+            box-shadow: 0 0 0 3px rgba(44, 122, 77, 0.1);
+        }
+
+        .calculate-btn {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #2c7a4d, #4a9d6a);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(44, 122, 77, 0.3);
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 122, 77, 0.4);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+
+        .results {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results h2 {
+            color: #2c7a4d;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .result-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #2c7a4d;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .result-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c7a4d;
+        }
+
+        .highlight-result {
+            background: linear-gradient(135deg, #2c7a4d, #4a9d6a);
+            color: white;
+            grid-column: span 2;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+
+        .highlight-result .result-label {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .highlight-result .result-value {
+            color: white;
+            font-size: 2rem;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(44, 122, 77, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(44, 122, 77, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(44, 122, 77, 0);
+            }
+        }
+
+        .error {
+            color: #dc3545;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+            }
+            
+            .form-container {
+                padding: 1.5rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .highlight-result {
+                grid-column: span 1;
+            }
+            
+            .highlight-result .result-value {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+            
+            .form-container {
+                padding: 1rem;
+            }
+            
+            .form-group {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌾 Reverse Farm Income Calculator</h1>
+            <p>Calculate the required contract amount for your desired monthly income</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="totalKanals">Total Kanals:</label>
+                    <input type="number" id="totalKanals" placeholder="Enter total kanals" min="0" step="any">
+                    <div id="kanalError" class="error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="desiredMonthlyIncome">Desired Monthly Income (INR):</label>
+                    <input type="number" id="desiredMonthlyIncome" placeholder="Enter desired monthly income" min="0" step="any">
+                    <div id="incomeError" class="error"></div>
+                </div>
+            </div>
+            
+            <button class="calculate-btn" onclick="calculateRequiredContract()">
+                Calculate Required Contract Amount
+            </button>
+            
+            <div id="results" class="results">
+                <h2>📊 Calculation Results</h2>
+                
+                <div class="results-grid">
+                    <div class="result-item highlight-result">
+                        <div class="result-label">Required Contract Amount</div>
+                        <div class="result-value" id="requiredContractAmount"></div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">Per Kanal Rate</div>
+                        <div class="result-value" id="perKanalRate"></div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">Total Annual Income</div>
+                        <div class="result-value" id="annualIncome"></div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">Half-Yearly Income</div>
+                        <div class="result-value" id="halfYearlyIncome"></div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">Monthly Income</div>
+                        <div class="result-value" id="monthlyIncome"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateRequiredContract() {
+            // Clear previous errors
+            document.getElementById('kanalError').textContent = '';
+            document.getElementById('incomeError').textContent = '';
+            
+            // Get input values
+            const totalKanals = parseFloat(document.getElementById('totalKanals').value);
+            const desiredMonthlyIncome = parseFloat(document.getElementById('desiredMonthlyIncome').value);
+            
+            // Validate inputs
+            let hasError = false;
+            
+            if (isNaN(totalKanals) || totalKanals <= 0) {
+                document.getElementById('kanalError').textContent = 'Please enter a valid number of kanals';
+                hasError = true;
+            }
+            
+            if (isNaN(desiredMonthlyIncome) || desiredMonthlyIncome <= 0) {
+                document.getElementById('incomeError').textContent = 'Please enter a valid desired monthly income';
+                hasError = true;
+            }
+            
+            if (hasError) {
+                document.getElementById('results').style.display = 'none';
+                return;
+            }
+            
+            // Reverse calculations
+            const kanalsPerAcre = 8;
+            const annualIncome = desiredMonthlyIncome * 12;
+            const perKanalRate = annualIncome / totalKanals;
+            const requiredContractAmount = perKanalRate * kanalsPerAcre;
+            const halfYearlyIncome = annualIncome / 2;
+            
+            // Format numbers in Indian format
+            const formatIndianCurrency = (amount) => {
+                return `₹${amount.toLocaleString('en-IN', {
+                    maximumFractionDigits: 2,
+                    minimumFractionDigits: 2
+                })}`;
+            };
+            
+            // Display results
+            document.getElementById('requiredContractAmount').textContent = formatIndianCurrency(requiredContractAmount);
+            document.getElementById('perKanalRate').textContent = formatIndianCurrency(perKanalRate);
+            document.getElementById('annualIncome').textContent = formatIndianCurrency(annualIncome);
+            document.getElementById('halfYearlyIncome').textContent = formatIndianCurrency(halfYearlyIncome);
+            document.getElementById('monthlyIncome').textContent = formatIndianCurrency(desiredMonthlyIncome);
+            
+            // Show results section
+            document.getElementById('results').style.display = 'block';
+            
+            // Smooth scroll to results
+            document.getElementById('results').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+        
+        // Add enter key support
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                calculateRequiredContract();
+            }
+        });
+    </script>
+</body>
+</html>
